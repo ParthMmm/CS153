@@ -39,7 +39,7 @@ int shm_open(int id, char **pointer) {
 			shm_table.shm_pages[i].refcnt += 1;
 			*pointer = (char*)va;
 			release(&(shm_table.lock));
-			return va;
+			return 0;
 		}
 	}
 	for(i = 0; i < 64; i++){
@@ -52,7 +52,7 @@ int shm_open(int id, char **pointer) {
 			mappages(myproc()->pgdir, (void*)va, PGSIZE, V2P(shm_table.shm_pages[i].frame), PTE_W|PTE_U);
 			*pointer = (char*)va;
 			release(&(shm_table.lock));
-			return va;
+			return 0;
 		}
 	}
 
